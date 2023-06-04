@@ -8,7 +8,7 @@ import retrofit2.http.Path
 interface PotterApi {
     //https://hp-api.onrender.com/api/character/:id
     //https://hp-api.onrender.com/api/characters/students
-    @GET("api/character/{id}")
+    @GET("api/characters/{id}")
     fun getCharacterDetail(
         @Path("id") id: String?
 

@@ -27,8 +27,10 @@ class CharactersAdapter(private var context: Context, private var characters: Ar
             .load(characters[position].image)
             .into(holder.ivThumbnail)
         holder.itemView.setOnClickListener{
-
         }
+        holder.tvName.text = characters[position].name
+        holder.tvActor.text = characters[position].actor
+
     }
 
     override fun getItemCount(): Int = characters.size
