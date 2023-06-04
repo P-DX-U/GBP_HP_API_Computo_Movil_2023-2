@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.third.gbp_hp_api_computo_movil_2023_2.activities.list_reciclerView
-import com.third.gbp_hp_api_computo_movil_2023_2.databinding.ActivityListReciclerViewBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.databinding.CharacterListBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.model.CharacterDetails
 

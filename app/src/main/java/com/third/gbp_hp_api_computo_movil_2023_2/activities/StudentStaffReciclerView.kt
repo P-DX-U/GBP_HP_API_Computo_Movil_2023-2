@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.third.gbp_hp_api_computo_movil_2023_2.adapters.CharactersAdapter
 import com.third.gbp_hp_api_computo_movil_2023_2.databinding.ActivityListReciclerViewBinding
-import com.third.gbp_hp_api_computo_movil_2023_2.databinding.ActivityMainBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.model.CharacterDetails
 import com.third.gbp_hp_api_computo_movil_2023_2.network.PotterApi
 import retrofit2.Call
@@ -17,8 +16,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class list_reciclerView : AppCompatActivity() {
+class StudentStaffReciclerView : AppCompatActivity() {
     private lateinit var binding: ActivityListReciclerViewBinding
+    var listType = "students"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityListReciclerViewBinding.inflate(layoutInflater)
@@ -29,8 +29,13 @@ class list_reciclerView : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+        val bundle = intent.extras
+        if (bundle!=null) {
+            listType = bundle!!.getString("Type").toString()
+        }
+
         val call = retrofit.create(PotterApi::class.java)
-            .getCharacterDetail("9e3f7ce4-b9a7-4244-b709-dae5c1f1d4a8")
+            .getCharacterDetail(listType)
 
         call.enqueue(object: Callback<ArrayList<CharacterDetails>> {
             override fun onResponse(
@@ -41,18 +46,21 @@ class list_reciclerView : AppCompatActivity() {
 
                 Log.d("RESPONSE", "RespuestaRecicler> ${response.toString()}")
                 Log.d("RESPONSE", "DatosRecicler> ${response.body().toString()}")
-                binding.rvMenu.layoutManager = LinearLayoutManager(this@list_reciclerView)
-                binding.rvMenu.adapter = CharactersAdapter(this@list_reciclerView, response.body()!!)
+                Log.d("TypeString", listType)
+                binding.rvMenu.layoutManager = LinearLayoutManager(this@StudentStaffReciclerView)
+                binding.rvMenu.adapter = CharactersAdapter(this@StudentStaffReciclerView, response.body()!!)
             }
 
             override fun onFailure(call: Call<ArrayList<CharacterDetails>>, t: Throwable) {
                 binding.pbConnection.visibility = View.GONE
-                Toast.makeText(this@list_reciclerView, "No hay conexión", Toast.LENGTH_SHORT)
+                Toast.makeText(this@StudentStaffReciclerView, "No hay conexión", Toast.LENGTH_SHORT)
             }
 
 
         })
-
     }
 
+
+
 }
+
