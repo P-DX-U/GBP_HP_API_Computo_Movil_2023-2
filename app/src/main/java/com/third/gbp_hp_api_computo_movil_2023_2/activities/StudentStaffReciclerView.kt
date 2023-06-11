@@ -1,5 +1,6 @@
 package com.third.gbp_hp_api_computo_movil_2023_2.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import com.third.gbp_hp_api_computo_movil_2023_2.adapters.CharactersAdapter
 import com.third.gbp_hp_api_computo_movil_2023_2.databinding.ActivityListReciclerViewBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.databinding.CharacterListBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.model.CharacterDetails
+import com.third.gbp_hp_api_computo_movil_2023_2.model.infoCharacter
 import com.third.gbp_hp_api_computo_movil_2023_2.network.PotterApi
 import org.w3c.dom.CharacterData
 import retrofit2.Call
@@ -17,6 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import com.third.gbp_hp_api_computo_movil_2023_2.R
 
 class StudentStaffReciclerView : AppCompatActivity() {
     private lateinit var binding: ActivityListReciclerViewBinding
@@ -46,24 +49,35 @@ class StudentStaffReciclerView : AppCompatActivity() {
             ) {
                 binding.pbConnection.visibility = View.GONE
 
-                Log.d("RESPONSE", "RespuestaRecicler> ${response.toString()}")
-                Log.d("RESPONSE", "DatosRecicler> ${response.body().toString()}")
-                Log.d("TypeString", listType)
+                //Log.d("RESPONSE", "RespuestaRecicler> ${response.toString()}")
+                //Log.d("RESPONSE", "DatosRecicler> ${response.body().toString()}")
+                //Log.d("TypeString", listType)
                 binding.rvMenu.layoutManager = LinearLayoutManager(this@StudentStaffReciclerView)
                 binding.rvMenu.adapter = CharactersAdapter(this@StudentStaffReciclerView, response.body()!!, {selectedCharacter: CharacterDetails -> profileClick(selectedCharacter)})
             }
 
             override fun onFailure(call: Call<ArrayList<CharacterDetails>>, t: Throwable) {
                 binding.pbConnection.visibility = View.GONE
-                Toast.makeText(this@StudentStaffReciclerView, "No hay conexión", Toast.LENGTH_SHORT)
+                Toast.makeText(this@StudentStaffReciclerView, R.string.noConnection, Toast.LENGTH_SHORT)
             }
         })
     }
 
     private fun profileClick(characterDetails: CharacterDetails){
+        val intent = Intent(this, DetailsActivity::class.java)
+        val charDetails = infoCharacter(
+            characterDetails.name,
+            characterDetails.species,
+            characterDetails.ancestry,
+            characterDetails.wand.wood,
+            characterDetails.wand.core,
+            characterDetails.patronus,
+            characterDetails.dateOfBirth
+        )
         val bundle = Bundle()
-
-
+        bundle.putParcelable("character", charDetails)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 }
 

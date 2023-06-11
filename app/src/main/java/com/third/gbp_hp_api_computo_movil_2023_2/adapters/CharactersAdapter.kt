@@ -29,7 +29,8 @@ class CharactersAdapter(private var context: Context, private var characters: Ar
         }
         holder.tvName.text = characters[position].name
         holder.tvActor.text = characters[position].actor
-        holder.itemView.setOnClickListener { characters[position] }
+        holder.itemView.setOnClickListener { clickListener(characters[position]) }
+
     }
 
     override fun getItemCount(): Int = characters.size

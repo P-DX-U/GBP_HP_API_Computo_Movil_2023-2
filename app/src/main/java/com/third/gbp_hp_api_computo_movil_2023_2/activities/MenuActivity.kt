@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.third.gbp_hp_api_computo_movil_2023_2.databinding.ActivityListReciclerViewBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.databinding.ActivityMenuBinding
 
 class MenuActivity : AppCompatActivity() {
