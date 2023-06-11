@@ -3,12 +3,13 @@ package com.third.gbp_hp_api_computo_movil_2023_2.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ExpandableListView.OnChildClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.third.gbp_hp_api_computo_movil_2023_2.databinding.CharacterListBinding
 import com.third.gbp_hp_api_computo_movil_2023_2.model.CharacterDetails
 
-class CharactersAdapter(private var context: Context, private var characters: ArrayList<CharacterDetails>): RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
+class CharactersAdapter(private var context: Context, private var characters: ArrayList<CharacterDetails>, private val clickListener: (CharacterDetails) -> Unit ): RecyclerView.Adapter<CharactersAdapter.ViewHolder>() {
     class ViewHolder(view: CharacterListBinding): RecyclerView.ViewHolder(view.root){
         var ivThumbnail = view.ivThumbnail
         var tvName = view.tvName
@@ -28,7 +29,7 @@ class CharactersAdapter(private var context: Context, private var characters: Ar
         }
         holder.tvName.text = characters[position].name
         holder.tvActor.text = characters[position].actor
-
+        holder.itemView.setOnClickListener { characters[position] }
     }
 
     override fun getItemCount(): Int = characters.size
